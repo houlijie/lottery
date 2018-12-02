@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
+use DB;
 use Illuminate\Validation\Validator;
 
 use App\Models\UserLotteryCount;
@@ -44,7 +45,7 @@ class lotteryController extends Controller
             'created_time|sthan' => $end_time
         ];
         try {
-            // DB::beginTransaction();
+            DB::beginTransaction();
             $validator = app('validator')->make($request->all(), [
                 'mobile' => 'required|numeric|digits:11',
             ],[
@@ -88,7 +89,7 @@ class lotteryController extends Controller
             // updateOrCreate
 
 
-            // DB::commit();
+            DB::commit();
             $userLotteryCount['total_count'] = 0;
             $result['prizeInfo'] = $prizeInfo;
             $left_lottery_count = $this->lottery_joint_limit - $userLotteryCount['total_count'] - 1;
@@ -97,7 +98,7 @@ class lotteryController extends Controller
             return response()->json(json_encode($prizeInfo));
 
         } catch(\Exception $e) {
-            // DB::rollBack();
+            DB::rollBack();
             $msg = $e->getMessage();
             return response()->json(['msg' => $msg, 'status' => 'failure']);
         }

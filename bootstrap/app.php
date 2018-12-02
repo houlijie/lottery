@@ -103,5 +103,5 @@ $app->router->group([
 $app->configure('app');
 
 $app->withEloquent();
-
+$app->withFacades();
 return $app;
