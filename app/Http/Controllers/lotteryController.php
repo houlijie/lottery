@@ -26,6 +26,11 @@ class lotteryController extends Controller
 
     private $lottery_joint_limit = 3; //抽奖限定时间内次数限制
 
+    public function index()
+    {
+        return view()->file(base_path().'/public/static/dist/views/index.php');
+    }
+
     /**
      * 获取奖励
      * 需求： 每人每天3次抽奖机会
