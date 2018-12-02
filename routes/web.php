@@ -14,3 +14,10 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
+
+
+$router->group(['prefix' => 'lottery'], function($router) {
+
+    $router->get('index', 'lotteryController@index');
+    $router->get('getPrize', 'lotteryController@getPrize');
+});
