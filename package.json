@@ -4,7 +4,8 @@
   "description": "",
   "main": "gulpfile.js",
   "scripts": {
-    "dev": "gulp dev"
+    "dev": "gulp dev",
+    "build": "gulp build"
   },
   "repository": {
     "type": "git",
@@ -33,8 +34,10 @@
     "gulp-rev": "^9.0.0",
     "gulp-rev-collector": "^1.3.1",
     "gulp-sass": "^4.0.2",
+    "gulp-sourcemaps": "^2.6.4",
     "gulp-uglify": "^3.0.1",
-    "run-sequence": "^2.2.1"
+    "run-sequence": "^2.2.1",
+    "through2": "^3.0.0"
   },
   "dependencies": {
     "zhf.random-num": "^1.0.2",
