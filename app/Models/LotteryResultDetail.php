@@ -10,9 +10,6 @@ class LotteryResultDetail extends Model
 {
     protected $table = 'lottery_result_detail';
 
-    public function updateBy($filter, $update)
-    {
-    }
 
     public function getListBy($filter)
     {
@@ -45,19 +42,6 @@ class LotteryResultDetail extends Model
         }
         $result['count'] = isset($result['list']) ? count($result['list']) : 0;
         return $result;
-    }
-
-    public function getUserCollection($where){
-      $user = $this->model;
-      if(count($where)){
-          $user = $user->where(function ($query) use ($where) {
-              foreach($where as $key => $value){
-                  if($key=='你需要查询的字段'){
-                      $query->where($key,$value);
-                  }
-              }
-           }); 
-      }
     }
 
     private function getData($entity)
