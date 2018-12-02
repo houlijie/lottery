@@ -12,9 +12,11 @@ const rename = require('gulp-rename');
 const del = require('del');
 const replace = require('gulp-batch-replace'); // 内容替换(这个没问题，上个包出的问题，这个包没出类似的问题)
 const runSequence = require('run-sequence'); // 同步
+const entryPath = `./public/static/src`;
+const outputPath = `./public/static/dist`;
 
 gulp.task('views', () => {
-    gulp.src('./resources/src/views/**/*.*')
+    gulp.src(`${entryPath}/views/**/*.*`)
         .pipe(plumber())
         .pipe(htmlmin({
             collapseWhitespace: true, // 压缩HTML
@@ -25,22 +27,22 @@ gulp.task('views', () => {
             minifyJS: true, //压缩页面JS
             minifyCSS: true, //压缩页面CSS
         }))
-        .pipe(gulp.dest('./resources/dist/views/'));
+        .pipe(gulp.dest(`${outputPath}/views/`));
 });
 
 gulp.task('js', function () {
-    gulp.src('./resources/src/js/**/*.js')
+    gulp.src(`${entryPath}/js/**/*.js`)
         .pipe(plumber())
         .pipe(babel({
             presets: ['@babel/env'],
         }))
         .pipe(browserify())
         .pipe(uglify())
-        .pipe(gulp.dest('./resources/dist/js/'));
+        .pipe(gulp.dest(`${outputPath}/js/`));
 });
 
 gulp.task('scss', function () {
-    gulp.src(`./resources/src/scss/**/*.scss`)
+    gulp.src(`${entryPath}/scss/**/*.scss`)
         .pipe(plumber())
         .pipe(autoprefixer({
             browsers: ['last 2 versions'],
@@ -48,21 +50,21 @@ gulp.task('scss', function () {
         }))
         .pipe(sass().on('error', sass.logError))
         .pipe(cssmin())
-        .pipe(gulp.dest(`./resources/dist/css/`));
+        .pipe(gulp.dest(`${outputPath}/css/`));
 });
 
 gulp.task('images', function () {
-    gulp.src('./resources/src/images/**/*.*')
+    gulp.src(`${entryPath}/images/**/*.*`)
         .pipe(plumber())
         .pipe(imagemin())
-        .pipe(gulp.dest('./resources/dist/images/'));
+        .pipe(gulp.dest(`${outputPath}/images/`));
 });
 
 gulp.task('watch', function () {
-    gulp.watch([`./resources/src/views/**/*.*`], ['views']);
-    gulp.watch([`./resources/src/js/**/*.js`], ['js']);
-    gulp.watch([`./resources/src/scss/**/*.scss`], ['scss']);
-    gulp.watch([`./resources/src/images/**/*.*`], ['images']);
+    gulp.watch([`${entryPath}/views/**/*.*`], ['views']);
+    gulp.watch([`${entryPath}/js/**/*.js`], ['js']);
+    gulp.watch([`${entryPath}/scss/**/*.scss`], ['scss']);
+    gulp.watch([`${entryPath}/images/**/*.*`], ['images']);
 });
 
 gulp.task('dev', ['views', 'js', 'scss', 'images', 'watch']);
