@@ -14,24 +14,33 @@ const replace = require('gulp-batch-replace');
 const through = require('through2');
 const runSequence = require('run-sequence'); // 同步(要保证task中return了一个Promise，否则无效)
 const rev = require('gulp-rev'); // 生成md5文件以及生成md的映射文件
-const revCollector = require('gulp-rev-collector'); // 替换html中引入的内容(css，js，images)。替换css中引入的内容(images)。也可以用来替换路径。
+const revCollector = require('gulp-rev-collector'); // 替换html中引入的文件名(css，js，images)。替换css中引入的文件名(images)。也就是说此包可以用来替换被引入文件的路径以及文件名。
 const sourcemaps = require('gulp-sourcemaps');
 const entryPath = `./public/static/src`;
 const outputPath = `./public/static/dist`;
 const outputPathTemporary = `./public/static/dist-temporary`;
-const dirReplacements = { // 对css和html中的进行路径替换
+const dirReplacementsDev = { // 对css和html中的进行路径替换
+    'css/': '/static/dist/css/',
+    'js/': '/static/dist/js/',
+    'images/': '/static/dist/images/',
+};
+const dirReplacementsBuild = { // 对css和html中的进行路径替换
     'css/': '/static/dist/css/',
     'js/': '/static/dist/js/',
     'images/': '/static/dist/images/',
 };
 
-gulp.task('views-dev', () => {
+gulp.task('dev-views', () => {
     return gulp.src(`${entryPath}/views/**/*.*`)
         .pipe(plumber())
-        .pipe(gulp.dest(`${outputPathTemporary}/views/`));
+        .pipe(revCollector({
+            replaceReved: true,
+            dirReplacements: dirReplacementsDev,
+        }))
+        .pipe(gulp.dest(`${outputPath}/views/`));
 });
 
-gulp.task('views-build', () => {
+gulp.task('build-views', () => {
     return gulp.src(`${entryPath}/views/**/*.*`)
         .pipe(plumber())
         .pipe(htmlmin({
@@ -46,17 +55,17 @@ gulp.task('views-build', () => {
         .pipe(gulp.dest(`${outputPathTemporary}/views/`));
 });
 
-gulp.task('js-dev', function () {
+gulp.task('dev-js', function () {
     return gulp.src(`${entryPath}/js/**/*.js`)
         .pipe(plumber())
         .pipe(babel({
             presets: ['@babel/env'],
         }))
         .pipe(browserify())
-        .pipe(gulp.dest(`${outputPathTemporary}/js/`));
+        .pipe(gulp.dest(`${outputPath}/js/`));
 });
 
-gulp.task('js-build', function () {
+gulp.task('build-js', function () {
     return gulp.src(`${entryPath}/js/**/*.js`)
         .pipe(babel({
             presets: ['@babel/env'],
@@ -69,7 +78,7 @@ gulp.task('js-build', function () {
         .pipe(gulp.dest(`${outputPathTemporary}/js/`));
 });
 
-gulp.task('scss-dev', function () {
+gulp.task('dev-scss', function () {
     return gulp.src(`${entryPath}/scss/**/*.scss`)
         .pipe(plumber())
         .pipe(autoprefixer({
@@ -77,10 +86,14 @@ gulp.task('scss-dev', function () {
             cascade: false,
         }))
         .pipe(sass().on('error', sass.logError))
-        .pipe(gulp.dest(`${outputPathTemporary}/css/`));
+        .pipe(revCollector({
+            replaceReved: true,
+            dirReplacements: dirReplacementsDev,
+        }))
+        .pipe(gulp.dest(`${outputPath}/css/`));
 });
 
-gulp.task('scss-build', function () {
+gulp.task('build-scss', function () {
     return gulp.src(`${entryPath}/scss/**/*.scss`)
         .pipe(autoprefixer({
             browsers: ['last 2 versions'],
@@ -94,13 +107,13 @@ gulp.task('scss-build', function () {
         .pipe(gulp.dest(`${outputPathTemporary}/css/`));
 });
 
-gulp.task('images-dev', function () {
+gulp.task('dev-images', function () {
     return gulp.src(`${entryPath}/images/**/*.*`)
         .pipe(plumber())
-        .pipe(gulp.dest(`${outputPathTemporary}/images/`));
+        .pipe(gulp.dest(`${outputPath}/images/`));
 });
 
-gulp.task('images-build', function () {
+gulp.task('build-images', function () {
     return gulp.src(`${entryPath}/images/**/*.*`)
         .pipe(imagemin())
         .pipe(rev())
@@ -109,40 +122,20 @@ gulp.task('images-build', function () {
         .pipe(gulp.dest(`${outputPathTemporary}/images/`));
 });
 
-gulp.task('rev-views-dev', function () {
-    return gulp.src(`${outputPathTemporary}/views/**/*.*`)
-        .pipe(plumber())
-        .pipe(revCollector({
-            replaceReved: true,
-            dirReplacements: dirReplacements,
-        }))
-        .pipe(gulp.dest(`${outputPath}/views/`));
-});
-
-gulp.task('rev-views-build', function () {
+gulp.task('build-rev-views', function () {
     return gulp.src([`${outputPathTemporary}/**/*.json`, `${outputPathTemporary}/views/**/*.*`])
         .pipe(revCollector({
             replaceReved: true,
-            dirReplacements: dirReplacements,
+            dirReplacements: dirReplacementsBuild,
         }))
         .pipe(gulp.dest(`${outputPath}/views/`));
 });
 
-gulp.task('rev-css-dev', function () {
-    return gulp.src(`${outputPathTemporary}/css/**/*.css`)
-        .pipe(plumber())
-        .pipe(revCollector({
-            replaceReved: true,
-            dirReplacements: dirReplacements,
-        }))
-        .pipe(gulp.dest(`${outputPath}/css/`));
-});
-
-gulp.task('rev-css-build', function () {
+gulp.task('build-rev-css', function () {
     return gulp.src([`${outputPathTemporary}/**/*.json`, `${outputPathTemporary}/css/**/*.css`])
         .pipe(revCollector({
             replaceReved: true,
-            dirReplacements: dirReplacements,
+            dirReplacements: dirReplacementsBuild,
         }))
         .pipe(gulp.dest(`${outputPath}/css/`));
 });
@@ -155,17 +148,15 @@ gulp.task('del-dist-temporary', function () {
     return del([outputPathTemporary]);
 });
 
-gulp.task('watch', function () {
-    gulp.watch([`${entryPath}/views/**/*.*`], ['views']);
-    gulp.watch([`${entryPath}/js/**/*.js`], ['js']);
-    gulp.watch([`${entryPath}/scss/**/*.scss`], ['scss']);
-    gulp.watch([`${entryPath}/images/**/*.*`], ['images']);
+gulp.task('dev-watch', function () {
+    gulp.watch([`${entryPath}/views/**/*.*`], ['dev-views']);
+    gulp.watch([`${entryPath}/js/**/*.js`], ['dev-js']);
+    gulp.watch([`${entryPath}/scss/**/*.scss`], ['dev-scss']);
+    gulp.watch([`${entryPath}/images/**/*.*`], ['dev-images']);
 });
 
-gulp.task('dev', function (done) {
-    runSequence(['del-dist'], ['views-dev', 'js-dev', 'scss-dev', 'images-dev'], ['rev-views-dev', 'rev-css-dev'], ['del-dist-temporary', 'watch'], done);
-});
+gulp.task('dev', ['dev-views', 'dev-js', 'dev-scss', 'dev-images', 'dev-watch']);
 
 gulp.task('build', function (done) {
-    runSequence(['del-dist'], ['views-build', 'js-build', 'scss-build', 'images-build'], ['rev-views-build', 'rev-css-build'], ['del-dist-temporary'], done);
+    runSequence(['del-dist'], ['build-views', 'build-js', 'build-scss', 'build-images'], ['build-rev-views', 'build-rev-css'], ['del-dist-temporary'], done);
 });
