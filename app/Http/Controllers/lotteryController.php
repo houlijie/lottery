@@ -95,7 +95,7 @@ class lotteryController extends Controller
             $left_lottery_count = $this->lottery_joint_limit - $userLotteryCount['total_count'] - 1;
             $result['left_lottery_count'] =  ($left_lottery_count > 0) ? $left_lottery_count : 0;
 
-            return response()->json(json_encode($prizeInfo));
+            return response()->json(json_encode($result));
 
         } catch(\Exception $e) {
             DB::rollBack();
