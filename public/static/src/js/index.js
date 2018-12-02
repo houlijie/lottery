@@ -47,10 +47,10 @@ class Game {
                 messageShow('您今天的抽奖次数用完了!');
                 return;
             }
-            // if (!(/1\d{10}/.test($tel.val()))) {
-            //     messageShow('请输入正确的11位手机号码!');
-            //     return;
-            // }
+            if (!(/1\d{10}/.test($tel.val()))) {
+                messageShow('请输入正确的11位手机号码!');
+                return;
+            }
             transparentShow(); // 防止抽奖的时候点击到其他区域(也可以防止重复点击试试手气)。如果滚动中可以点击其他区域，则就注释掉这里以及下面的两处transparentHide()。
             if (!isClick) {
                 isClick = true; // 防止重复点击试试手气，此处和transparentShow()功能重叠了，没删掉的原因是担心不需要transparentShow()这个功能。
