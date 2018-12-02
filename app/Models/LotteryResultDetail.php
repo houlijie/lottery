@@ -10,6 +10,16 @@ class LotteryResultDetail extends Model
 {
     protected $table = 'lottery_result_detail';
 
+    protected $guarded = [];
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    // protected $fillable = ['mobile'];
+
+    public $timestamps = false;
 
     public function getListBy($filter)
     {

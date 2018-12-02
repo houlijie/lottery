@@ -78,7 +78,6 @@ $app->singleton(
 |
 */
 
-$app->register(Dingo\Api\Provider\LumenServiceProvider::class);
 $app->register(Illuminate\Redis\RedisServiceProvider::class);
 // $app->register(App\Providers\AppServiceProvider::class);
 // $app->register(App\Providers\AuthServiceProvider::class);
@@ -100,8 +99,6 @@ $app->router->group([
 ], function ($router) {
     require __DIR__.'/../routes/web.php';
 });
-
-$app->configure('app');
 
 $app->withEloquent();
 $app->withFacades();
