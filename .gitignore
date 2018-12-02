@@ -1,4 +1,5 @@
-/.idea
+.idea
 Homestead.json
 Homestead.yaml
+node_modules
 .env

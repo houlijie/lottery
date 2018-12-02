@@ -14,7 +14,7 @@ return [
     */
 
     'paths' => [
-        realpath(base_path('views')),
+        realpath(base_path('public/static/dist/views')),
     ],
 
     /*
