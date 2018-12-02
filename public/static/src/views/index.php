@@ -31,7 +31,7 @@
         <meta name="author" content="zhouhuafei, 周华飞, 1123486116@qq.com">
         <!-- 页面标题 -->
         <title>抽奖</title>
-        <link rel="stylesheet" href="../css/index.css">
+        <link rel="stylesheet" href="/static/dist/css/index.css">
     </head>
     <body>
         <div class="g-wrap">
@@ -70,12 +70,12 @@
                 <div class="prize-item"></div>
                 <div class="prize-item"></div>
             </div>
-            <img class="scroll" src="../images/scroll.png" alt="">
-            <img class="lamp" src="../images/lamp2.png" alt="">
+            <img class="scroll" src="/static/dist/images/scroll.png" alt="">
+            <img class="lamp" src="/static/dist/images/lamp2.png" alt="">
             <div class="handle handle_selected1">
-                <img class="handle-item" src="../images/handle1.png" alt="">
-                <img class="handle-item" src="../images/handle2.png" alt="">
-                <img class="handle-item" src="../images/handle3.png" alt="">
+                <img class="handle-item" src="/static/dist/images/handle1.png" alt="">
+                <img class="handle-item" src="/static/dist/images/handle2.png" alt="">
+                <img class="handle-item" src="/static/dist/images/handle3.png" alt="">
             </div>
             <div class="handle-btn"></div>
             <input type="text" class="tel" placeholder="请输入手机号">
@@ -85,7 +85,7 @@
             </div>
             <div class="rule-btn"></div>
             <div class="rule">
-                <img class="rule-img" src="../images/rule.png" alt="">
+                <img class="rule-img" src="/static/dist/images/rule.png" alt="">
                 <div class="rule-close"></div>
             </div>
             <div class="transparent"></div>
@@ -104,7 +104,7 @@
                 </div>
             </div>
             <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
-            <script src="../js/index.js"></script>
+            <script src="/static/dist/js/index.js"></script>
         </div>
     </body>
 </html>
