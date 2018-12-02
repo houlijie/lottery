@@ -26,6 +26,7 @@
     "gulp-babel": "^8.0.0",
     "gulp-batch-replace": "^0.0.0",
     "gulp-browserify": "^0.5.1",
+    "gulp-concat": "^2.6.1",
     "gulp-cssmin": "^0.2.0",
     "gulp-htmlmin": "^5.0.1",
     "gulp-imagemin": "^5.0.3",

@@ -16,13 +16,19 @@ const runSequence = require('run-sequence'); // 同步(要保证task中return了
 const rev = require('gulp-rev'); // 生成md5文件以及生成md的映射文件
 const revCollector = require('gulp-rev-collector'); // 替换html中引入的文件名(css，js，images)。替换css中引入的文件名(images)。也就是说此包可以用来替换被引入文件的路径以及文件名。
 const sourcemaps = require('gulp-sourcemaps');
+const concat = require('gulp-concat');
 const entryPath = `./public/static/src`;
 const outputPath = `./public/static/dist`;
 const outputPathTemporary = `./public/static/dist-temporary`;
 const dirReplacementsDev = { // 对css和html中的进行路径替换
-    'css/': '/static/dist/css/',
-    'js/': '/static/dist/js/',
-    'images/': '/static/dist/images/',
+    html: [
+        ['css/', '/static/dist/css/'],
+        ['js/', '/static/dist/js/'],
+        ['images/', '/static/dist/images/'],
+    ],
+    css: [
+        ['images/', '/static/dist/images/'],
+    ],
 };
 const dirReplacementsBuild = { // 对css和html中的进行路径替换
     'css/': '/static/dist/css/',
@@ -33,10 +39,7 @@ const dirReplacementsBuild = { // 对css和html中的进行路径替换
 gulp.task('dev-views', () => {
     return gulp.src(`${entryPath}/views/**/*.*`)
         .pipe(plumber())
-        .pipe(revCollector({
-            replaceReved: true,
-            dirReplacements: dirReplacementsDev,
-        }))
+        .pipe(replace(dirReplacementsDev.html))
         .pipe(gulp.dest(`${outputPath}/views/`));
 });
 
@@ -86,10 +89,7 @@ gulp.task('dev-scss', function () {
             cascade: false,
         }))
         .pipe(sass().on('error', sass.logError))
-        .pipe(revCollector({
-            replaceReved: true,
-            dirReplacements: dirReplacementsDev,
-        }))
+        .pipe(replace(dirReplacementsDev.css))
         .pipe(gulp.dest(`${outputPath}/css/`));
 });
 
