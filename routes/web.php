@@ -11,11 +11,11 @@
 |
 */
 
-// $router->get('/', function () use ($router) {
-//     return $router->app->version();
-// });
+$router->get('/', function () use ($router) {
+    return view('index');
+});
 
-$router->get('/', 'lotteryController@index');
+// $router->get('/', 'lotteryController@index');
 
 $router->group(['prefix' => 'lottery'], function($router) {
 
