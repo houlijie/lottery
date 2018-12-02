@@ -14,7 +14,7 @@ use App\Exceptions\Exception;
 class lotteryController extends Controller
 {
     private $prizeList = [
-        ['prize_id' => 0, 'prize_name' => '未中奖', 'rate' => 20, 'stock' => 9999999],
+        ['prize_id' => 0, 'prize_name' => '未中奖', 'rate' => 20, 'stock' => 99999999],
         ['prize_id' => 1, 'prize_name' => '一等奖', 'rate' => 16, 'stock' => 100],
         ['prize_id' => 2, 'prize_name' => '二等奖', 'rate' => 16, 'stock' => 100],
         ['prize_id' => 3, 'prize_name' => '三等奖', 'rate' => 16, 'stock' => 100],
@@ -37,8 +37,11 @@ class lotteryController extends Controller
         $this->end_time = $this->start_time + 24*60*60;
         foreach ($this->prizeList as $prize) {
             $key = $this->today.':lottery-stock:'.$prize['prize_id'];
-            Redis::set($key, $prize['stock']);
-            Redis::expireat($key, $this->end_time);
+            $stock = Redis::get($key);
+            if(is_null($stock)) {
+                Redis::set($key, $prize['stock']);
+                Redis::expireat($key, $this->end_time);
+            }
         }
     }
 
@@ -86,21 +89,20 @@ class lotteryController extends Controller
             $prizeId = $this->getRand();
             $lotteryStockKey = $this->today.':lottery-stock:'.$prizeId;
             $userWinKey = $this->today.':WinNum:'. $mobile;
-
             $userWinNum = Redis::get($userWinKey);
             $lotteryStock = Redis::get($lotteryStockKey);
 
-            if($prizeId > 0 && $lotteryStock <=0 && $userWinNum > 0) {
+            if($userWinNum > 0 || ($prizeId > 0 && $lotteryStock <=0)) {
                 $prizeInfo = $this->prizeList[0];
             } else {
-                // 商品库存减一
-                Redis::decrby($lotteryStockKey, 1);
                 //用户中奖次数加+1
-                $userLotteryCount = Redis::incrby($userWinNum, 1);
+                $res = Redis::incrby($userWinKey, 1);
                 $prizeInfo= $this->prizeList[$prizeId];
             }
+            // 商品库存减一
+            Redis::decrby($lotteryStockKey, 1);
             //用户参与次数
-            Redis::incrby($userJoinKey, 1);
+            $userLotteryCount = Redis::incrby($userJoinKey, 1);
 
             //抽奖记录
             $detailData = [
