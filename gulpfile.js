@@ -12,6 +12,8 @@ const rename = require('gulp-rename');
 const del = require('del');
 const replace = require('gulp-batch-replace'); // 内容替换(这个没问题，上个包出的问题，这个包没出类似的问题)
 const runSequence = require('run-sequence'); // 同步
+const rev = require('gulp-rev'); // 加md5
+const revCollector = require('gulp-rev-collector'); // 替换html中引入的内容(css，js，images)。替换css中引入的内容(images)。
 const entryPath = `./public/static/src`;
 const outputPath = `./public/static/dist`;
 
