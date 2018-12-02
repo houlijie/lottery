@@ -31,7 +31,7 @@ class lotteryController extends Controller
      * 需求： 每人每天3次抽奖机会
      *
      * @return void
-     * @author 
+     * @author
      **/
     public function getPrize(Request $request)
     {
@@ -94,13 +94,14 @@ class lotteryController extends Controller
             $result['prizeInfo'] = $prizeInfo;
             $left_lottery_count = $this->lottery_joint_limit - $userLotteryCount['total_count'] - 1;
             $result['left_lottery_count'] =  ($left_lottery_count > 0) ? $left_lottery_count : 0;
+            $result['status'] =  'success';
 
-            return response()->json(json_encode($result));
+            return response()->json($result);
 
         } catch(\Exception $e) {
             DB::rollBack();
             $msg = $e->getMessage();
-            return response()->json(['msg' => $msg, 'status' => 'failure']);
+            return response()->json(['message' => $msg, 'status' => 'failure']);
         }
     }
 
@@ -110,7 +111,7 @@ class lotteryController extends Controller
      * undocumented function
      *
      * @return void
-     * @author 
+     * @author
      **/
      //获取奖项id算法
     public function getRand($proArr){
