@@ -64,5 +64,5 @@ return array(
     'DeepCopy\\' => array($vendorDir . '/myclabs/deep-copy/src/DeepCopy'),
     'Cron\\' => array($vendorDir . '/dragonmantank/cron-expression/src/Cron'),
     'App\\' => array($baseDir . '/app'),
-    '' => array($baseDir . '/src', $vendorDir . '/nesbot/carbon/src'),
+    '' => array($vendorDir . '/nesbot/carbon/src'),
 );
