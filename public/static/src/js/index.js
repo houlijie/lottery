@@ -151,7 +151,7 @@ class Game {
         function fnLampMove() {
             timer = setInterval(function () {
                 domLamp.classList.toggle('lamp_selected');
-            }, 80);
+            }, 160);
         }
 
         function fnLampStop() {
