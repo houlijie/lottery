@@ -14,12 +14,12 @@ use App\Exceptions\Exception;
 class lotteryController extends Controller
 {
     private $prizeList = [
-        ['prize_id' => 0, 'prize_name' => '未中奖', 'rate' => 20, 'stock' => 99999999],
-        ['prize_id' => 1, 'prize_name' => '一等奖', 'rate' => 16, 'stock' => 100],
-        ['prize_id' => 2, 'prize_name' => '二等奖', 'rate' => 16, 'stock' => 100],
-        ['prize_id' => 3, 'prize_name' => '三等奖', 'rate' => 16, 'stock' => 100],
-        ['prize_id' => 4, 'prize_name' => '四等奖', 'rate' => 16, 'stock' => 100],
-        ['prize_id' => 5, 'prize_name' => '五等奖', 'rate' => 16, 'stock' => 100],
+        ['prize_id' => 0, 'prize_name' => '未中奖',   'rate' => 0, 'stock' => 99999999],
+        ['prize_id' => 1, 'prize_name' => '开业好礼', 'rate' => 20, 'stock' => 200],
+        ['prize_id' => 2, 'prize_name' => '美食好礼', 'rate' => 20, 'stock' => 100],
+        ['prize_id' => 3, 'prize_name' => '亲子好礼', 'rate' => 20, 'stock' => 100],
+        ['prize_id' => 4, 'prize_name' => '生活好礼', 'rate' => 20, 'stock' => 100],
+        ['prize_id' => 5, 'prize_name' => '休闲好礼', 'rate' => 20, 'stock' => 100],
     ];
 
     private $lottery_joint_limit = 3; //抽奖限定时间内次数限制
@@ -135,24 +135,34 @@ class lotteryController extends Controller
     /**
      * 抽奖函数
      *
+     * 没有库存的不参与抽奖
+     *
      * @return void
      * @author
      **/
-     //获取奖项id算法
     private function getRand(){
-        $proArr = array_column($this->prizeList, 'rate');
-        $result = "";
-        $proSum = array_sum($proArr);
-        foreach ($proArr as $key => $proCur) {
-            $randNum = mt_rand(1, $proSum);
-            if ($randNum <= $proCur) {
-                $result = $key;
-                break;
-            } else {
-                $proSum -= $proCur;
+        $proArr = [];
+        foreach ($this->prizeList as $key => $prize) {
+            $lotteryStockKey = $this->today.':lottery-stock:'.$prize['prize_id'];
+            $stock = Redis::get($lotteryStockKey);
+            if($stock > 0) {
+                $proArr[$key] = $prize['rate'];
             }
         }
-        unset ($proArr);
+        $proSum = array_sum($proArr);
+        $result = 0;
+        if($proArr && $proSum > 0) {
+            foreach ($proArr as $key => $proCur) {
+                $randNum = mt_rand(1, $proSum);
+                if ($randNum <= $proCur) {
+                    $result = $key;
+                    break;
+                } else {
+                    $proSum -= $proCur;
+                }
+            }
+            unset ($proArr);
+        }
         return $result;
     }
 }
