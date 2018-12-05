@@ -44,7 +44,7 @@ class Game {
         });
         $('.handle-btn,.btn').on('click', function () {
             if (remainder === 0) {
-                messageShow('您今天的抽奖次数用完了!');
+                messageShow('留一点运气，明天再来吧!');
                 return;
             }
             if (!(/1\d{10}/.test($tel.val()))) {
@@ -93,7 +93,7 @@ class Game {
                                 $remainderNum.html(remainder);
                                 $btn.addClass('btn_active');
                                 if (level === 0) { // 未中奖
-                                    messageShow('未中奖!');
+                                    messageShow('抱歉，未中奖!');
                                 } else {
                                     luckShow();
                                     $luckGift.html(levelName);
