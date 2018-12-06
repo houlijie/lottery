@@ -71,14 +71,14 @@ class lotteryController extends Controller
             $prizeInfo = $prizeList[$prizeId];
             $userWinKey = $lotteryDate.':WinNum:'. $mobile;
             $userWinNum = Redis::get($userWinKey);
-            $lotteryStock = $prizeInfo['stock'];
-            if($userWinNum > 0 || ($prizeId > 0 && $lotteryStock <=0)) {
-                $prizeInfo = $prizeList[0];
+            if($userWinNum > 0 || ($prizeId > 0 && $prizeInfo['stock'] <=0)) {
+                $prizeId = 0;
+                $prizeInfo= $prizeList[$prizeId];
             } else {
                 //用户中奖次数加+1
                 $res = Redis::incrby($userWinKey, 1);
-                $prizeInfo= $prizeList[$prizeId];
             }
+
             // 商品库存减一
             $a = DB::table('lottery_detail')->where('lottery_date', $lotteryDate)
                                             ->where('prize_id', $prizeId)
