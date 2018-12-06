@@ -365,6 +365,7 @@ class ComposerStaticInit38923c9ffe492da413b4ebb7b6ab41e8
         'App\\Jobs\\ExampleJob' => __DIR__ . '/../..' . '/app/Jobs/ExampleJob.php',
         'App\\Jobs\\Job' => __DIR__ . '/../..' . '/app/Jobs/Job.php',
         'App\\Listeners\\ExampleListener' => __DIR__ . '/../..' . '/app/Listeners/ExampleListener.php',
+        'App\\Models\\LotteryDetail' => __DIR__ . '/../..' . '/app/Models/LotteryDetail.php',
         'App\\Models\\LotteryResultDetail' => __DIR__ . '/../..' . '/app/Models/LotteryResultDetail.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',
