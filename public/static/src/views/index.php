@@ -96,7 +96,7 @@
             <div class="luck">
                 <div class="luck-close"></div>
                 <div class="luck-title">恭喜您</div>
-                <div class="luck-title">获得&#60;博隆-<span class="luck-gift">开业好礼</span>&#62;一份</div>
+                <div class="luck-title">获得&#60;<span class="luck-gift"></span>&#62;一份</div>
                 <div class="luck-content">
                     <div>请您凭借此页截图</div>
                     <div>在截止日期前至指定地点兑换礼品</div>
