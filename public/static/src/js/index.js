@@ -18,6 +18,7 @@ class Game {
         const $message = $('.message');
         const $luck = $('.luck');
         const $luckGift = $('.luck-gift');
+        const $luckNum = $('.luck-num');
         const $btn = $('.btn');
         const $transparent = $('.transparent');
         const $tel = $('.tel');
@@ -69,6 +70,7 @@ class Game {
                             transparentHide();
                             return;
                         }
+                        const num = response.num;
                         const prizeInfo = response.prizeInfo;
                         const level = prizeInfo.prize_id;
                         const levelName = prizeInfo.prize_name;
@@ -98,6 +100,7 @@ class Game {
                                 } else {
                                     luckShow();
                                     $luckGift.html(levelName);
+                                    $luckNum.html(num);
                                 }
                             }, 3400);
                         }, 200);

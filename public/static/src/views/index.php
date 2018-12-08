@@ -101,7 +101,7 @@
                 <div class="luck-content">
                     <div>请您凭借此页截图</div>
                     <div>在截止日期前至指定地点兑换礼品</div>
-                    <div>No.00001</div>
+                    <div>No.<span class="luck-num"></span></div>
                 </div>
             </div>
             <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
