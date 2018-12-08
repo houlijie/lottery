@@ -79,7 +79,7 @@
                 <img class="handle-item" src="images/handle3.png" alt="">
             </div>
             <div class="handle-btn"></div>
-            <input type="text" class="tel" placeholder="请输入手机号">
+            <input type="text" class="tel" type="tel" placeholder="请输入手机号">
             <div class="btn">
                 <div class="btn-text">试试手气</div>
                 <div class="btn-remainder">(剩余<span class="btn-remainder-num">3</span>次机会)</div>

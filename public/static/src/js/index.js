@@ -42,7 +42,8 @@ class Game {
         $('.rule-close').on('click', function () {
             $rule.removeClass('rule_show');
         });
-        $('.handle-btn,.btn').on('click', function () {
+        $('.handle-btn,.btn').on('click', function (ev) {
+            ev.stopPropagation();
             messageHide();
             if (remainder === 0) {
                 messageShow('留一点运气，明天再来吧!');
@@ -104,6 +105,9 @@ class Game {
                     },
                 });
             }
+        });
+        $(document).on('click', function () {
+            messageHide();
         });
         $('.message-close').on('click', function () {
             messageHide();
