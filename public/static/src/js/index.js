@@ -110,6 +110,9 @@ class Game {
         $('.luck-close').on('click', function () {
             luckHide();
         });
+        $tel.on('focus', function () {
+            this.scrollIntoViewIfNeeded();
+        });
 
         function luckShow() {
             $luck.addClass('luck_show');

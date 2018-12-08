@@ -70,6 +70,7 @@
                 <div class="prize-item"></div>
                 <div class="prize-item"></div>
             </div>
+            <img class="logo" src="images/logo.png" alt="">
             <img class="scroll" src="images/scroll.png" alt="">
             <img class="lamp" src="images/lamp2.png" alt="">
             <div class="handle handle_selected1">

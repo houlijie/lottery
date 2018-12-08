@@ -23,6 +23,13 @@ html, body, .g-wrap {
     margin: 0 auto;
 }
 
+.logo{
+    position: absolute;
+    left: px2rem(30);
+    top: px2rem(30);
+    width: px2rem(48);
+}
+
 .prize {
     display: flex;
     overflow: hidden;
