@@ -43,6 +43,7 @@ class Game {
             $rule.removeClass('rule_show');
         });
         $('.handle-btn,.btn').on('click', function () {
+            messageHide();
             if (remainder === 0) {
                 messageShow('留一点运气，明天再来吧!');
                 return;
