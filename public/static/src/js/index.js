@@ -138,6 +138,9 @@ class Game {
         }
 
         function messageShow(text) {
+            if ($message.hasClass('message_show')) {
+                return;
+            }
             $message.addClass('message_show');
             $message.find('.message-info').html(text);
             clearTimeout(messageShow.timer);
