@@ -44,7 +44,6 @@ class Game {
         });
         $('.handle-btn,.btn').on('click', function (ev) {
             ev.stopPropagation();
-            messageHide();
             if (remainder === 0) {
                 messageShow('留一点运气，明天再来吧!');
                 return;
