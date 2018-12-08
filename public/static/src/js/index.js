@@ -70,7 +70,7 @@ class Game {
                             transparentHide();
                             return;
                         }
-                        const num = response.num;
+                        const no = response.no;
                         const prizeInfo = response.prizeInfo;
                         const level = prizeInfo.prize_id;
                         const levelName = prizeInfo.prize_name;
@@ -100,7 +100,7 @@ class Game {
                                 } else {
                                     luckShow();
                                     $luckGift.html(levelName);
-                                    $luckNum.html(num);
+                                    $luckNum.html(no);
                                 }
                             }, 3400);
                         }, 200);
