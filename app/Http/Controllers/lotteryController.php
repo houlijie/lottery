@@ -78,7 +78,6 @@ class lotteryController extends Controller
                 //用户中奖次数加+1
                 $res = Redis::incrby($userWinKey, 1);
             }
-
             // 商品库存减一
             $a = DB::table('lottery_detail')->where('lottery_date', $lotteryDate)
                                             ->where('prize_id', $prizeId)
@@ -97,6 +96,11 @@ class lotteryController extends Controller
             LotteryResultDetail::create($detailData);
 
             $left_lottery_count = $this->lottery_joint_limit - $userLotteryCount;
+
+            $lotteryResMdl = new LotteryResultDetail();
+            $resultList = $lotteryResMdl->getListBy(['prize_id' => $prizeId, 'created_time|bthan' => $startTime, 'created_time|sthan' => $endTime]);
+
+            $no = $lotteryDate.str_pad($resultList['count'], 3, "0", STR_PAD_LEFT);
             $result = [
                 'status' => 'success',
                 'prizeInfo' => [
@@ -104,6 +108,7 @@ class lotteryController extends Controller
                     'prize_name' => $prizeInfo['prize_name']
                 ],
                 'left_lottery_count' => ($left_lottery_count > 0) ? $left_lottery_count : 0,
+                'no' => $no,
             ];
 
             return response()->json($result);
