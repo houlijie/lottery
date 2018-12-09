@@ -66,16 +66,29 @@ class lotteryController extends Controller
                 throw new \Exception("活动暂未开启");
             }
             $prizeList = $prizeData['list'];
+            $hasStockPrizes = array_filter($prizeList, function($v, $k) {
+                return $v['stock'] > 0;
+            }, ARRAY_FILTER_USE_BOTH);
             // 用户抽奖次数校验
-            $prizeId = $this->getRand($prizeList);
-            $prizeInfo = $prizeList[$prizeId];
+            $prizeId = $this->getRand($hasStockPrizes);
             $userWinKey = $lotteryDate.':WinNum:'. $mobile;
             $userWinNum = Redis::get($userWinKey);
+
+            if($hasStockPrizes && !$userWinNum && $userJoinNum >=2) {
+                $data = array_filter(array_column($hasStockPrizes, 'prize_id'));
+                if($data) {
+                    $rn = array_rand($data);
+                    $prizeId = $data[$rn];
+                }
+            }
+
+            $prizeInfo = $prizeList[$prizeId];
             if($userWinNum > 0 || ($prizeId > 0 && $prizeInfo['stock'] <=0)) {
                 $prizeId = 0;
                 $prizeInfo= $prizeList[$prizeId];
-            } else {
-                //用户中奖次数加+1
+            }
+            //用户中奖次数加+1
+            if($prizeId > 0) {
                 $res = Redis::incrby($userWinKey, 1);
             }
             // 商品库存减一
@@ -128,12 +141,7 @@ class lotteryController extends Controller
      * @author
      **/
     private function getRand($prizeList){
-        $proArr = [];
-        foreach ($prizeList as $key => $prize) {
-            if($prize['stock'] > 0) {
-                $proArr[$key] = $prize['rate'];
-            }
-        }
+        $proArr = array_column($prizeList, 'rate');
         $proSum = array_sum($proArr);
         $result = 0;
         if($proArr && $proSum > 0) {
