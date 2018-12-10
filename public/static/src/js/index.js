@@ -144,7 +144,9 @@ class Game {
 
         function selected(levelResult, remainder) {
             domItems.forEach(function (v, i) {
-                v.style.backgroundPosition = `0 ${px2rem(-((3 - remainder + 1) * prizeScroll * prizeAllH + prizeH * (levelResult[i] - 1)))}`;
+                let y = parseFloat(px2rem(-((3 - remainder + 1) * prizeScroll * prizeAllH + prizeH * (levelResult[i] - 1))));
+                y = `${Math.floor(parseFloat($('html').css('font-size')) * y)}px`;
+                v.style.backgroundPosition = `0 ${y}`;
             });
         }
 
