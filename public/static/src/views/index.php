@@ -99,9 +99,13 @@
                 <div class="luck-title">恭喜您</div>
                 <div class="luck-title">获得&#60;<span class="luck-gift"></span>&#62;一份</div>
                 <div class="luck-content">
-                    <div>请您凭借此页截图</div>
-                    <div>在截止日期前至指定地点兑换礼品</div>
-                    <div>No.<span class="luck-num"></span></div>
+                    <div class="luck-content-item">
+                        <div>请您凭借</div>
+                        <div class="luck-big">此页截图</div>
+                    </div>
+                    <div class="luck-content-item">在截止日期前至指定地点兑换礼品</div>
+                    <div class="luck-content-item">No.<span class="luck-num"></span></div>
+                    <div class="luck-content-item luck-small">请注意：关闭后将无法截图!</div>
                 </div>
             </div>
             <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>

@@ -23,7 +23,7 @@ html, body, .g-wrap {
     margin: 0 auto;
 }
 
-.logo{
+.logo {
     position: absolute;
     left: px2rem(30);
     top: px2rem(30);
@@ -246,7 +246,28 @@ html, body, .g-wrap {
 .luck-content {
     margin-top: px2rem(30);
     font-size: px2rem(12);
-    line-height: px2rem(16);
+}
+
+.luck-content-item {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    line-height: 1;
+    margin: px2rem(8) 0;
+}
+
+.luck-big {
+    font-weight: bold;
+    font-size: px2rem(20);
+    color: #fff100;
+    text-shadow: #440608 1px 0 0, #440608 0 1px 0, #440608 -1px 0 0, #440608 0 -1px 0;
+}
+
+.luck-small {
+    font-weight: bold;
+    color: #fff100;
+    font-size: px2rem(16);
+    text-shadow: #440608 1px 0 0, #440608 0 1px 0, #440608 -1px 0 0, #440608 0 -1px 0;
 }
 
 .transparent {
