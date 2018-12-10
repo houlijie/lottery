@@ -70,6 +70,7 @@
                 <div class="prize-item"></div>
                 <div class="prize-item"></div>
             </div>
+            <img class="logo" src="images/logo.png" alt="">
             <img class="scroll" src="images/scroll.png" alt="">
             <img class="lamp" src="images/lamp2.png" alt="">
             <div class="handle handle_selected1">
@@ -78,7 +79,7 @@
                 <img class="handle-item" src="images/handle3.png" alt="">
             </div>
             <div class="handle-btn"></div>
-            <input type="text" class="tel" placeholder="请输入手机号">
+            <input type="tel" class="tel" placeholder="请输入手机号">
             <div class="btn">
                 <div class="btn-text">试试手气</div>
                 <div class="btn-remainder">(剩余<span class="btn-remainder-num">3</span>次机会)</div>
@@ -96,11 +97,11 @@
             <div class="luck">
                 <div class="luck-close"></div>
                 <div class="luck-title">恭喜您</div>
-                <div class="luck-title">获得&#60;博隆-<span class="luck-gift">开业好礼</span>&#62;一份</div>
+                <div class="luck-title">获得&#60;<span class="luck-gift"></span>&#62;一份</div>
                 <div class="luck-content">
                     <div>请您凭借此页截图</div>
                     <div>在截止日期前至指定地点兑换礼品</div>
-                    <div>No.00001</div>
+                    <div>No.<span class="luck-num"></span></div>
                 </div>
             </div>
             <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>

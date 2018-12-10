@@ -18,6 +18,7 @@ class Game {
         const $message = $('.message');
         const $luck = $('.luck');
         const $luckGift = $('.luck-gift');
+        const $luckNum = $('.luck-num');
         const $btn = $('.btn');
         const $transparent = $('.transparent');
         const $tel = $('.tel');
@@ -42,7 +43,8 @@ class Game {
         $('.rule-close').on('click', function () {
             $rule.removeClass('rule_show');
         });
-        $('.handle-btn,.btn').on('click', function () {
+        $('.handle-btn,.btn').on('click', function (ev) {
+            ev.stopPropagation();
             if (remainder === 0) {
                 messageShow('留一点运气，明天再来吧!');
                 return;
@@ -68,6 +70,7 @@ class Game {
                             transparentHide();
                             return;
                         }
+                        const no = response.no;
                         const prizeInfo = response.prizeInfo;
                         const level = prizeInfo.prize_id;
                         const levelName = prizeInfo.prize_name;
@@ -97,6 +100,7 @@ class Game {
                                 } else {
                                     luckShow();
                                     $luckGift.html(levelName);
+                                    $luckNum.html(no);
                                 }
                             }, 3400);
                         }, 200);
@@ -104,11 +108,17 @@ class Game {
                 });
             }
         });
+        $(document).on('click', function () {
+            messageHide();
+        });
         $('.message-close').on('click', function () {
             messageHide();
         });
         $('.luck-close').on('click', function () {
             luckHide();
+        });
+        $tel.on('focus', function () {
+            this.scrollIntoViewIfNeeded();
         });
 
         function luckShow() {
@@ -130,6 +140,9 @@ class Game {
         }
 
         function messageShow(text) {
+            if ($message.hasClass('message_show')) {
+                return;
+            }
             $message.addClass('message_show');
             $message.find('.message-info').html(text);
             clearTimeout(messageShow.timer);
