@@ -30,7 +30,7 @@
         <!-- 页面作者 -->
         <meta name="author" content="zhouhuafei, 周华飞, 1123486116@qq.com">
         <!-- 页面标题 -->
-        <title>抽奖</title>
+        <title>博隆圣诞大礼包 - 开业钜惠，千份大礼送不停</title>
         <link rel="stylesheet" href="css/index.css">
     </head>
     <body>
