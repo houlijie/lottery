@@ -71,7 +71,7 @@ class lotteryController extends Controller
             }, ARRAY_FILTER_USE_BOTH);
             // 用户抽奖次数校验
             $prizeId = $this->getRand($hasStockPrizes);
-            $userWinKey = $lotteryDate.':WinNum:'. $mobile;
+            $userWinKey = 'LotteryWinNum:'. $mobile;
             $userWinNum = Redis::get($userWinKey);
 
             if($hasStockPrizes && !$userWinNum && $userJoinNum >=2) {
